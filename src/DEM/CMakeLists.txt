@@ -104,12 +104,12 @@ install(
 if(PYTHON_BUILD)
 	message(STATUS "==== Building PyDEME Components ====")
 
-	pybind11_add_module(PyDEME_core ${DEM_headers} ${DEM_sources} ${PyDEME_sources})
+	pybind11_add_module(DEME ${DEM_headers} ${DEM_sources} ${PyDEME_sources})
 
-	set_target_properties(PyDEME_core PROPERTIES LINKER_LANGUAGE CXX)
+	set_target_properties(DEME PROPERTIES LINKER_LANGUAGE CXX)
 
 	target_include_directories(
-		PyDEME_core
+		DEME
 		PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
 		PUBLIC ${ProjectIncludeSource}
 		PUBLIC ${ProjectIncludeGenerated}
@@ -121,7 +121,7 @@ if(PYTHON_BUILD)
 	find_package(Threads REQUIRED)
 
 	target_link_libraries(
-		PyDEME_core
+		DEME
 		PUBLIC CUDA::cudart
 		PUBLIC CUDA::nvrtc
 		PUBLIC CUDA::cuda_driver	
