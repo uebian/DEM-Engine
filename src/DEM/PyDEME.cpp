@@ -125,6 +125,8 @@ PYBIND11_MODULE(DEME, obj) {
     py::class_<DEMERuntimeDataHelper>(obj, "DEMERuntimeDataHelper")
         .def(py::init<>())
         .def_static("SetPathPrefix", &DEMERuntimeDataHelper::SetPathPrefix);
+        .def_static("SetCUDAToolkitHeaders", &DEMERuntimeDataHelper::SetCUDAToolkitHeaders)
+        .def_static("SetCUDAToolkitTargetHeaders", &DEMERuntimeDataHelper::SetCUDAToolkitTargetHeaders);
 
     py::class_<deme::PDSampler>(obj, "PDSampler")
         .def(py::init<float>())

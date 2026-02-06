@@ -4,6 +4,7 @@
 //  SPDX-License-Identifier: BSD-3-Clause
 
 #include <core/utils/RuntimeData.h>
+#include <core/utils/DEMEPaths.h>
 
 #define DEME_RUNTIME_DATA_DIRECTORY "@DEME_RUNTIME_DATA_DIRECTORY@"
 #define DEME_RUNTIME_INCLUDE_DIRECTORY "@DEME_RUNTIME_INCLUDE_DIRECTORY@"
@@ -20,4 +21,21 @@ std::filesystem::path DEMERuntimeDataHelper::include_path = std::filesystem::pat
 void DEMERuntimeDataHelper::SetPathPrefix(const std::filesystem::path& p) {
     data_path = p / "share/DEME";
     include_path = p / "include";
+    deme::SetDEMEKernelPath(p / "share/DEME/kernel");
+    deme::SetDEMEIncludePath(p / "include");
+}
+
+void RuntimeDataHelper::SetPathPrefix(const std::string& p) {
+    std::filesystem::path path = p;
+    SetPathPrefix(path);
+}
+
+void RuntimeDataHelper::SetCUDAToolkitHeaders(const std::string& p) {
+    std::filesystem::path path = p;
+    deme::SetDEMECudaToolkitIncludePath(path);
+}
+
+void RuntimeDataHelper::SetCUDAToolkitTargetHeaders(const std::string& p) {
+    std::filesystem::path path = p;
+    deme::SetDEMECudaToolkitTargetIncludePath(path);
 }

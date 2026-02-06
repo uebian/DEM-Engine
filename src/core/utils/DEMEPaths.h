@@ -32,6 +32,12 @@ void SetDEMEKernelPath();
 // Set the path to the DEME include directory
 void SetDEMEIncludePath();
 
+// Set the path to the DEME CUDA include directory
+void SetDEMECudaToolkitIncludePath(const std::filesystem::path& include_path);
+
+// Set the path to the DEME CUDA target include directory
+void SetDEMECudaToolkitTargetIncludePath(const std::filesystem::path& include_path);
+
 // Obtain the complete path to the specified filename, given relative to the
 // DEME data directory (thread safe)
 std::string GetDEMEDataFile(const std::string& filename);

@@ -21,6 +21,7 @@ if(PYTHON_BUILD)
 	target_include_directories(
 		DEMERuntimeDataHelper_python
 		PUBLIC $<BUILD_INTERFACE:${ProjectIncludeSource}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+		PUBLIC $<BUILD_INTERFACE:${ProjectIncludeGenerated}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 	)
 
 	set_target_properties(
@@ -49,6 +50,9 @@ configure_file(
 )
 
 add_library(core OBJECT)
+
+find_package(Threads REQUIRED)
+target_link_libraries(core PUBLIC Threads::Threads)
 
 target_include_directories(
 	core
@@ -169,7 +173,7 @@ add_library(DEMERuntimeDataHelper SHARED)
 
 # Windows specific: Define DLL export macros
 if(WIN32)
-    target_compile_definitions(DEMERuntimeDataHelper PRIVATE DEMERuntimeDataHelper_EXPORTS)
+    target_compile_definitions(DEMERuntimeDataHelper PRIVATE DEME_BUILD_DLL)
 endif()
 
 
@@ -181,6 +185,7 @@ target_sources(DEMERuntimeDataHelper
 target_include_directories(
 	DEMERuntimeDataHelper
 	PUBLIC $<BUILD_INTERFACE:${ProjectIncludeSource}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+	PUBLIC $<BUILD_INTERFACE:${ProjectIncludeGenerated}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 set_target_properties(

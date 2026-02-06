@@ -42,4 +42,14 @@ void SetDEMEIncludePath() {
     JitHelper::KERNEL_INCLUDE_DIR = DEMERuntimeDataHelper::include_path;
 }
 
+// Set the path to the DEME CUDA include directory
+void SetDEMECudaToolkitIncludePath(const std::filesystem::path& include_path) {
+    JitHelper::CUDA_TOOLKIT_INCLUDE_DIR = include_path;
+}
+
+// Set the path to the DEME CUDA include directory
+void SetDEMECudaToolkitTargetIncludePath(const std::filesystem::path& include_path) {
+    JitHelper::CUDA_TOOLKIT_TARGET_INCLUDE_DIR = include_path;
+}
+
 }  // namespace deme

@@ -9,6 +9,9 @@ set (algorithms_message "[algorithms]")
 
 add_library(algorithms OBJECT)
 
+find_package(Threads REQUIRED)
+target_link_libraries(algorithms PUBLIC Threads::Threads)
+
 target_include_directories(
 	algorithms	
 	PUBLIC ${ProjectIncludeSource}

@@ -9,10 +9,12 @@
 #include <filesystem>
 
 #if defined(_WIN32) || defined(_WIN64)
-    #ifdef DEMERuntimeDataHelper_EXPORTS
+    #ifdef DEME_BUILD_DLL
         #define DEMERuntimeDataHelper_API __declspec(dllexport)
-    #else
+    #elif defined(DEME_USE_DLL)
         #define DEMERuntimeDataHelper_API __declspec(dllimport)
+    #else 
+        #define DEMERuntimeDataHelper_API
     #endif
 #else
     #define DEMERuntimeDataHelper_API
@@ -25,6 +27,9 @@ class DEMERuntimeDataHelper_API DEMERuntimeDataHelper {
 
     // or std::string
     static void SetPathPrefix(const std::filesystem::path& p);
+    static void SetPathPrefix(const std::string& p);
+    static void SetCUDAToolkitHeaders(const std::string& p);
+    static void SetCUDAToolkitTargetHeaders(const std::string& p);
 };
 
 #endif

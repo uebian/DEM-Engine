@@ -16,12 +16,15 @@
 #include "RuntimeData.h"
 #include "JitHelper.h"
 
-jitify::JitCache JitHelper::kcache;
+jitify::JitCache* JitHelper::kcache = nullptr;
 
 // const std::filesystem::path JitHelper::KERNEL_DIR = DEMERuntimeDataHelper::data_path / "kernel";
 // const std::filesystem::path JitHelper::KERNEL_INCLUDE_DIR = DEMERuntimeDataHelper::include_path;
 std::filesystem::path JitHelper::KERNEL_DIR = DEMERuntimeDataHelper::data_path / "kernel";
 std::filesystem::path JitHelper::KERNEL_INCLUDE_DIR = DEMERuntimeDataHelper::include_path;
+std::filesystem::path JitHelper::CUDA_TOOLKIT_INCLUDE_DIR = DEME_CUDA_TOOLKIT_HEADERS;
+std::filesystem::path JitHelper::CUDA_TOOLKIT_TARGET_INCLUDE_DIR = DEME_CUDA_TOOLKIT_HEADERS;
+
 
 JitHelper::Header::Header(const std::filesystem::path& sourcefile) {
     this->_source = JitHelper::loadSourceFile(sourcefile);
@@ -84,5 +87,8 @@ jitify::Program JitHelper::buildProgram(
     }
     */
 
-    return kcache.program(code, header_code, flags);
+    if(kcache==nullptr)
+        kcache = new jitify::JitCache();
+
+    return kcache->program(code, header_code, flags);
 }

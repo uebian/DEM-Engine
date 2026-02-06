@@ -104,12 +104,12 @@ install(
 if(PYTHON_BUILD)
 	message(STATUS "==== Building PyDEME Components ====")
 
-	pybind11_add_module(DEME ${DEM_headers} ${DEM_sources} ${PyDEME_sources})
+	pybind11_add_module(PyDEME_core ${DEM_headers} ${DEM_sources} ${PyDEME_sources})
 
-	set_target_properties(DEME PROPERTIES LINKER_LANGUAGE CXX)
+	set_target_properties(PyDEME_core PROPERTIES LINKER_LANGUAGE CXX)
 
 	target_include_directories(
-		DEME
+		PyDEME_core
 		PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
 		PUBLIC ${ProjectIncludeSource}
 		PUBLIC ${ProjectIncludeGenerated}
@@ -118,8 +118,10 @@ if(PYTHON_BUILD)
 		PUBLIC ${CMAKE_INSTALL_INCLUDEDIR}/algorithms
 	)
 
+	find_package(Threads REQUIRED)
+
 	target_link_libraries(
-		DEME
+		PyDEME_core
 		PUBLIC CUDA::cudart
 		PUBLIC CUDA::nvrtc
 		PUBLIC CUDA::cuda_driver	
@@ -134,11 +136,10 @@ if(PYTHON_BUILD)
 	)
 
 	set_target_properties(
-		DEME PROPERTIES
+		PyDEME_core PROPERTIES
 		POSITION_INDEPENDENT_CODE True
 		CXX_STANDARD ${CXXSTD_SUPPORTED}
 		PUBLIC_HEADER "${DEM_headers}"
-		INSTALL_RPATH "$ENV{CONDA_PREFIX}/lib/python3.10/site-packages/lib"
 	)
 
 	add_compile_options(-fno-lto)
